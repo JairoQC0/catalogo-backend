@@ -14,7 +14,7 @@ app.use(express.json());
 // Configuración de CORS para frontend
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "*", // Puedes restringir a tu frontend luego
+    origin: "*", // Puedes restringir a tu frontend luego
     credentials: true,
   })
 );
