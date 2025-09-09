@@ -17,7 +17,7 @@ async function main() {
 
 main()
   .then(() => {
-    console.log("Seed completado");
+    console.log("Seed completadooooooooooooooo");
     prisma.$disconnect();
   })
   .catch((e) => {
