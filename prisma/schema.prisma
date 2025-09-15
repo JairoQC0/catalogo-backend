@@ -24,7 +24,7 @@ model Catalog {
   id        Int       @id @default(autoincrement())
   name      String
   services  Service[]
-  packages  Package[]  
+  packages  Package[]   
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }

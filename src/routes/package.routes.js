@@ -1,12 +1,25 @@
+// src/routes/package.routes.js
 import { Router } from "express";
-import * as packageController from "../controllers/package.controller.js";
+import {
+  createPackage,
+  getPackages,
+  getPackageById,
+  updatePackage,
+  deletePackage,
+} from "../controllers/package.controller.js";
+import {
+  authMiddleware,
+  authorizeRole,
+} from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.post("/", packageController.createPackage);
-router.get("/", packageController.getPackages);
-router.get("/:id", packageController.getPackageById);
-router.put("/:id", packageController.updatePackage);
-router.delete("/:id", packageController.deletePackage);
+// Rutas para paquetes
+router.get("/", getPackages);
+router.get("/:id", getPackageById);
+
+router.post("/", authMiddleware, authorizeRole("ADMIN"), createPackage);
+router.put("/:id", authMiddleware, authorizeRole("ADMIN"), updatePackage);
+router.delete("/:id", authMiddleware, authorizeRole("ADMIN"), deletePackage);
 
 export default router;
