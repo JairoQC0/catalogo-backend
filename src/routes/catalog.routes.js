@@ -20,11 +20,16 @@ router.post("/", authMiddleware, authorizeRole("ADMIN"), async (req, res) => {
   }
 });
 
-// Listar catálogos con servicios (público)
+// Listar catálogos con servicios y paquetes (público)
 router.get("/", async (req, res) => {
   try {
     const catalogs = await prisma.catalog.findMany({
-      include: { services: true },
+      include: {
+        services: true,
+        packages: {
+          include: { services: true }, // 👈 también devolvemos los paquetes y sus servicios
+        },
+      },
     });
     res.json(catalogs);
   } catch (err) {
@@ -32,12 +37,18 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Obtener un catálogo con servicios y paquetes (público)
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const catalog = await prisma.catalog.findUnique({
       where: { id: Number(id) },
-      include: { services: true },
+      include: {
+        services: true,
+        packages: {
+          include: { services: true },
+        },
+      },
     });
 
     if (!catalog) {
