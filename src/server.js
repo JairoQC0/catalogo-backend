@@ -5,16 +5,16 @@ import cors from "cors";
 import catalogRoutes from "./routes/catalog.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import packageRoutes from "./routes/package.routes.js";
 
 dotenv.config();
 const app = express();
 
 app.use(express.json());
 
-// Configuración de CORS para frontend
 app.use(
   cors({
-    origin: "*", // Puedes restringir a tu frontend luego
+    origin: "*",
     credentials: true,
   })
 );
@@ -23,6 +23,7 @@ app.use(
 app.use("/catalogs", catalogRoutes);
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
+app.use("/packages", packageRoutes);
 
 // Puerto dinámico
 const PORT = process.env.PORT || 3000;

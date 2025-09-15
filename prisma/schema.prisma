@@ -24,17 +24,31 @@ model Catalog {
   id        Int       @id @default(autoincrement())
   name      String
   services  Service[]
+  packages  Package[]  
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
 
 model Service {
-  id          Int      @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   name        String
   description String
   price       Float
   catalogId   Int
-  catalog     Catalog  @relation(fields: [catalogId], references: [id], onDelete: Cascade)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  catalog     Catalog    @relation(fields: [catalogId], references: [id], onDelete: Cascade)
+  packages    Package[]  @relation("ServiceOnPackage")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Package {
+  id          Int        @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  catalogId   Int
+  catalog     Catalog    @relation(fields: [catalogId], references: [id], onDelete: Cascade)
+  services    Service[]  @relation("ServiceOnPackage") 
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
